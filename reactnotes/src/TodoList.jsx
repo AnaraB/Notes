@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import TodoItem from "./TodoItem";
+import TodoForm from "./TodoForm";
+import {Box} from "@mui/material" 
+import Typography from "@mui/material/Typography";
 
+  //let's render todos stored in local storage
 
-const initialTodos = [
-  { id: 1, text: "walk the dog", completed: false },
-  { id: 2, text: "Cook lunch", completed: false },
-  { id: 3, text: "walk the dog", completed: true },
-  { id: 4, text: "shopping", completed: false },
-  { id: 5, text: "walk the dog", completed: true },
-];
+  const getInitialData = () => {
+    const data = JSON.parse(localStorage.getItem("todos"))
+   if(!data) return [];
+   return data;
+  }
+
 
 export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState(getInitialData);
+
+
+
+  //let's save todo list in local storage
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+
+  }, [todos])
 
 
 // return only id's that are not selected by clicking delete icon
@@ -21,7 +32,7 @@ export default function TodoList() {
       return prevTodos.filter((t)=> t.id !== id)
     })
   }
-
+ 
   //toggle selected todo state from completed boolean to opposite else return todo
  const toggleTodo = (id)=> {
   setTodos((prevTodos) => {
@@ -35,40 +46,34 @@ export default function TodoList() {
   })
 
  }
+
+ const addTodo = (text) => {
+  setTodos((prevTodos) => {
+    return [...prevTodos, {text: text, id: crypto.randomUUID(), completed: false}]
+  })
+
+ }
   return (
+    <Box sx={{
+      display: "flex",
+      justifyContent: "center", 
+      flexDirection: "column",
+      alignItems: "center",
+      m:3
+    }}>
+    <Typography variant="h3" component="h2" sx={{ flexGrow: 1 }}>
+  Today
+  </Typography>
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
          {todos.map((todo) => (
           //use implicit return  by placing a component into ()
        <TodoItem  todo={todo} key={todo.id} remove={removeTodo} toggle={() => toggleTodo(todo.id)}/>
 
     ))}
-     
+      <TodoForm addTodo={addTodo}/>
     </List>
+    </Box>
+   
   );
 }
 
-// export default function CheckboxList() {
-//   const [checked, setChecked] = React.useState([0]);
-
-//   const handleToggle = (value: number) => () => {
-//     const currentIndex = checked.indexOf(value);
-//     const newChecked = [...checked];
-
-//     if (currentIndex === -1) {
-//       newChecked.push(value);
-//     } else {
-//       newChecked.splice(currentIndex, 1);
-//     }
-
-//     setChecked(newChecked);
-//   };
-
-//   return (
-//     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-//       {[0, 1, 2, 3].map((value) => {
-//         const labelId = `checkbox-list-label-${value}`;
-
-//       })}
-//     </List>
-//   );
-// }

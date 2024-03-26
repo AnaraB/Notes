@@ -5,7 +5,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-import CommentIcon from "@mui/icons-material/Comment";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function TodoItem({todo, remove, toggle}) {
 
@@ -21,7 +22,7 @@ function TodoItem({todo, remove, toggle}) {
           
           secondaryAction={
             <IconButton edge="end" aria-label="comments" onClick={removeTodo}>
-              <CommentIcon />
+              <DeleteIcon />
             </IconButton>
           }
           disablePadding
