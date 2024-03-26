@@ -13,11 +13,19 @@ const initialTodos = [
 
 export default function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
+
+
+// return only id's that are not selected by clicking delete icon
+  const removeTodo = (id) => {
+    setTodos(prevTodos => {
+      return prevTodos.filter((t)=> t.id !== id)
+    })
+  }
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
          {todos.map((todo) => (
           //use implicit return  by placing a component into ()
-       <TodoItem  todo={todo} key={todo.id}/>
+       <TodoItem  todo={todo} key={todo.id} remove={removeTodo}/>
 
     ))}
      
