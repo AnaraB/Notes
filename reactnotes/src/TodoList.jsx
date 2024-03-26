@@ -21,11 +21,25 @@ export default function TodoList() {
       return prevTodos.filter((t)=> t.id !== id)
     })
   }
+
+  //toggle selected todo state from completed boolean to opposite else return todo
+ const toggleTodo = (id)=> {
+  setTodos((prevTodos) => {
+    return prevTodos.map((todo) => {
+      if(todo.id === id) {
+        return {...todo, completed: !todo.completed}
+      } else {
+        return todo;
+      }
+    })
+  })
+
+ }
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
          {todos.map((todo) => (
           //use implicit return  by placing a component into ()
-       <TodoItem  todo={todo} key={todo.id} remove={removeTodo}/>
+       <TodoItem  todo={todo} key={todo.id} remove={removeTodo} toggle={() => toggleTodo(todo.id)}/>
 
     ))}
      
