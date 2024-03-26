@@ -11,8 +11,10 @@ This is a simple mobile application that allows users to create and manage to-do
 ## Screenshot
 ![alt notes demo](./reactnotes/src/assets/notes-demo.png)
 
+Head to the following link to see the app in action
+<https://gregarious-kringle-3302e3.netlify.app/>
 
-
+------------------------------------
 ### Technologies used: 
 * React 
 * Material UI 
